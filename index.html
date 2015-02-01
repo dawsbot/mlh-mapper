@@ -12,46 +12,93 @@
       }
     </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>
 var map;
+var url = "https://mlh.io/seasons/s2015/events"
+
+var scrape = function(fn) {
+  httpGet(url, function(data) {
+    var events = []
+
+    $.parseHTML(data)
+    $(".event-wrapper" ).each(function(index) {
+      var event = {}
+
+      event.name = $(this).find("h3").text()
+      event.date = $(this).find("p").first().text()
+      event.location = $(this).find("p").last().text()
+
+      events.push(event)
+    })
+
+    fn(events)
+  })
+}
+/*
+ function httpGet(theUrl, fn)
+    {
+        var xmlHttp = null;
+
+        xmlHttp = new XMLHttpRequest();
+        xmlHttp.open( "GET", theUrl, false );
+        xmlHttp.send( null );
+        fn(xmlHttp.responseText);
+    }
+*/
+function httpGet(theUrl, fn){
+  // Using YQL and JSONP
+$.ajax({
+    url: theUrl,
+ 
+    // The name of the callback parameter, as specified by the YQL service
+    jsonp: "callback",
+ 
+    // Tell jQuery we're expecting JSONP
+    dataType: "jsonp",
+    method: "GET",
+    // Work with the response
+    success: function( response ) {
+        console.log( response ); // server response
+        fn(response);
+    
+
+    }
+  })
+}
+// var myLatlng = new google.maps.LatLng(36, -86);
 function initialize() {
-  var mapOptions = {
-    zoom:5,
-    center: new google.maps.LatLng(38, -98)
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+
+  scrape(function(data) {
+
+    var mapOptions = {
+      zoom:5,
+      center: new google.maps.LatLng(38, -98)
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
 
 
-//console.log(httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA"))
-httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA", function (data){
+  //console.log(httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA"))
+    console.log(JSON.stringify(data))
+    httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA", function (data){
+      data = JSON.parse(data)
 
+      var point = data.results[0].geometry.location
+      var marker = new google.maps.Marker({
+          position: point,
+          map: map,
+          title:"Hello World!"
+      });
+    });
 
-  var point = data.results[0].geometry.location
-  var myLatlng = new google.maps.LatLng(36, -86);
- // var myLatlng = new google.maps.LatLng(36, -86);
-  var marker = new google.maps.Marker({
-      position: point,
-      map: map,
-      title:"Hello World!"
-  });
-});
-
-  
-function httpGet(theUrl, fn)
-{
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", theUrl, false );
-    xmlHttp.send( null );
-    fn(JSON.parse(xmlHttp.responseText));
-}
-}
+    })
+      
+    }
 //end of initialize
 google.maps.event.addDomListener(window, 'load', initialize);
 // To add the marker to the map, call setMap();
-marker.setMap(map);
+//marker.setMap(map);
   </script>
 </head>
 <body>
