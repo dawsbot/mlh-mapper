@@ -22,28 +22,33 @@ function initialize() {
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
+
+//console.log(httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA"))
+httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA", function (data){
+
+
+  var point = data.results[0].geometry.location
   var myLatlng = new google.maps.LatLng(36, -86);
-  
+ // var myLatlng = new google.maps.LatLng(36, -86);
   var marker = new google.maps.Marker({
-      position: myLatlng,
+      position: point,
       map: map,
       title:"Hello World!"
   });
+});
 
-//Hit this URL:
-//https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA
- (function(infowindow) {
+  
+function httpGet(theUrl, fn)
+{
+    var xmlHttp = null;
 
-    google.maps.event.addListener(marker, 'mouseover', function() {
-        infowindow.open(map, this);
-    });
-
-    google.maps.event.addListener(marker, 'mouseout', function() {
-        infowindow.close();
-    });
-})(infowindow);
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false );
+    xmlHttp.send( null );
+    fn(JSON.parse(xmlHttp.responseText));
 }
-
+}
+//end of initialize
 google.maps.event.addDomListener(window, 'load', initialize);
 // To add the marker to the map, call setMap();
 marker.setMap(map);
