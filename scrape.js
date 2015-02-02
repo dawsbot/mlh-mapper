@@ -1,6 +1,8 @@
 var cheerio = require("cheerio")
 var request = require("request")
 
+module.exports = getHackathonData
+
 var url = "https://mlh.io/seasons/s2015/events"
 
 var getHackathonData = function(fn) {
