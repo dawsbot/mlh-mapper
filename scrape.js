@@ -1,16 +1,7 @@
-var cheerio = require("cheerio")
-var request = require("request")
-
 var url = "https://mlh.io/seasons/s2015/events"
 
-module.exports = function(fn) {
-  request(url, function(err, resp, body) {
-    if (err) {
-      throw err
-    }
-
-    $ = cheerio.load(body)
-
+var scrape = function(fn) {
+  $.get(url, function() {
     var events = []
 
     $(".event-wrapper" ).each(function(index) {
