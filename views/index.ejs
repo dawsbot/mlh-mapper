@@ -34,7 +34,6 @@ function httpGet(theUrl, fn)
 }
 
 
-// var myLatlng = new google.maps.LatLng(36, -86);
 function initialize() {
 
   scrape(function(data) {
@@ -46,24 +45,24 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
 
+    data.forEach(function (event) {
+      var baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
+      httpGet(baseUrl + event.location, function (data){
+        data = JSON.parse(data)
 
-  //console.log(httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA"))
-    console.log(JSON.stringify(data))
-    httpGet("https://maps.googleapis.com/maps/api/geocode/json?address=MountainView,CA", function (data){
-      data = JSON.parse(data)
-
-      var point = data.results[0].geometry.location
-      var marker = new google.maps.Marker({
-          position: point,
-          map: map,
-          title:"Hello World!"
+        var point = data.results[0].geometry.location
+        var marker = new google.maps.Marker({
+            position: point,
+            map: map,
+            title:"Hello World!"
+        });
       });
-    });
-
     })
-      
-    }
+
+  })
+}
 //end of initialize
+
 google.maps.event.addDomListener(window, 'load', initialize);
 // To add the marker to the map, call setMap();
 //marker.setMap(map);
