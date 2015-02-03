@@ -23,17 +23,6 @@ var scrape = function(fn) {
   })
 }
 
-function httpGet(theUrl, fn)
-{
-  var xmlHttp = null;
-
-  xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", theUrl, false );
-  xmlHttp.send( null );
-  fn(xmlHttp.responseText);
-}
-
-
 function initialize() {
 
   scrape(function(data) {
@@ -47,9 +36,7 @@ function initialize() {
 
     data.forEach(function (event) {
       var baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
-      httpGet(baseUrl + event.location, function (data){
-        data = JSON.parse(data)
-
+      $.getJSON(baseUrl + event.location, function (data) {
         var point = data.results[0].geometry.location
         var marker = new google.maps.Marker({
             position: point,
