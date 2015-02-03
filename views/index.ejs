@@ -18,54 +18,22 @@ var map;
 var url = "https://mlh.io/seasons/s2015/events"
 
 var scrape = function(fn) {
-  httpGet(url, function(data) {
-    var events = []
-
-    $.parseHTML(data)
-    $(".event-wrapper" ).each(function(index) {
-      var event = {}
-
-      event.name = $(this).find("h3").text()
-      event.date = $(this).find("p").first().text()
-      event.location = $(this).find("p").last().text()
-
-      events.push(event)
-    })
-
-    fn(events)
+  $.getJSON("data", function(data) {
+    fn(data)
   })
 }
-/*
- function httpGet(theUrl, fn)
-    {
-        var xmlHttp = null;
 
-        xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", theUrl, false );
-        xmlHttp.send( null );
-        fn(xmlHttp.responseText);
-    }
-*/
-function httpGet(theUrl, fn){
-  // Using YQL and JSONP
-$.ajax({
-    url: theUrl,
- 
-    // The name of the callback parameter, as specified by the YQL service
-    jsonp: "callback",
- 
-    // Tell jQuery we're expecting JSONP
-    dataType: "jsonp",
-    method: "GET",
-    // Work with the response
-    success: function( response ) {
-        console.log( response ); // server response
-        fn(response);
-    
+function httpGet(theUrl, fn)
+{
+  var xmlHttp = null;
 
-    }
-  })
+  xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", theUrl, false );
+  xmlHttp.send( null );
+  fn(xmlHttp.responseText);
 }
+
+
 // var myLatlng = new google.maps.LatLng(36, -86);
 function initialize() {
 

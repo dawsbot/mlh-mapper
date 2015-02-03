@@ -1,5 +1,17 @@
 var scrape = require("./scrape")
+var express = require("express")
 
-scrape(function(data) {
-  console.log(JSON.stringify(data))
+var app = express()
+
+app.set('view engine', 'ejs')
+
+app.get("/", function (req, res) {
+  res.render("index")
+})
+
+var server = app.listen(3000, function () {
+  var host = server.address().address
+  var post = server.address().port
+
+  console.log("Listening at http://%s:%s", host, post)
 })
