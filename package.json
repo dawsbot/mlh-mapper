@@ -7,7 +7,9 @@
   },
   "dependencies": {
     "cheerio": "",
-    "request": ""
+    "request": "",
+    "express": "",
+    "ejs": ""
   },
   "engines": {
     "node": "0.10.x"
