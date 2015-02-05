@@ -22,12 +22,24 @@ function initialize() {
       var baseUrl = "https://maps.googleapis.com/maps/api/geocode/json?address="
       $.getJSON(baseUrl + event.location, function (data) {
         var point = data.results[0].geometry.location
+
+        var info = '<p>' + event.name + '<br>' + event.location + '<br>' +
+                   event.date + '</p>'
+
+        var infowindow = new google.maps.InfoWindow({
+            content: info
+        })
+
         var marker = new google.maps.Marker({
             position: point,
             map: map,
-            title:"Hello World!"
-        });
-      });
+            title: event.name
+        })
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map, marker);
+        })
+      })
     })
 
   })
@@ -35,5 +47,3 @@ function initialize() {
 //end of initialize
 
 google.maps.event.addDomListener(window, 'load', initialize);
-// To add the marker to the map, call setMap();
-//marker.setMap(map);
