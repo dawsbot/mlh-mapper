@@ -1,7 +1,7 @@
 var cheerio = require("cheerio")
 var request = require("request")
 
-var url = "https://mlh.io/seasons/s2015/events"
+var url = 'https://mlh.io/seasons/na-2017/events'
 
 module.exports = function(fn) {
   request(url, function(err, resp, body) {
