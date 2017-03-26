@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "eslint-config-uber-es5"
+  ],
+  "globals": {
+    "google": true
+  },
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "max-nested-callbacks": 0
+  }
+}
