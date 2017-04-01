@@ -9,6 +9,7 @@
     "browser": true
   },
   "rules": {
-    "max-nested-callbacks": 0
+    "max-nested-callbacks": 0,
+    "func-names": 0
   }
 }

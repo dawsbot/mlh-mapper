@@ -7,10 +7,15 @@
   },
   "dependencies": {
     "eslint": "^3.18.0",
-    "eslint-config-uber-es5": "^2.0.1"
+    "eslint-config-uber-es5": "^2.0.1",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0"
   },
   "scripts": {
     "start": "node index.js",
     "test": "eslint ."
+  },
+  "engines": {
+    "node": ">=7"
   }
 }
