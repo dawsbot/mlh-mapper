@@ -3,13 +3,15 @@
     "eslint-config-uber-es5"
   ],
   "globals": {
-    "google": true
+    "google": true,
+    "Promise": true
   },
   "env": {
     "browser": true
   },
   "rules": {
     "max-nested-callbacks": 0,
-    "func-names": 0
+    "func-names": 0,
+    "no-process-env": 0
   }
 }
