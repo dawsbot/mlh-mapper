@@ -1,26 +1,22 @@
-var scrape = require("./scrape")
-var express = require("express")
+'use strict';
+var express = require('express');
+var handlebars = require('express-handlebars');
 
-var app = express()
+var app = express();
 
-app.set('view engine', 'ejs')
+app.engine('handlebars', handlebars.create({}).engine);
+app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/public'));
 
-var port = process.env.PORT || 3000
+app.get('/', function(req, res) {
+  res.render('index', {
+    googleApiKey: process.env.googleApiKey
+  });
+});
 
-app.get("/", function (req, res) {
-  res.render("index")
-})
+app.get('/geocode', function(req, res) {
+  // console.log('req.: ', req.);
+});
 
-app.get("/data", function (req, res) {
-  scrape(function(data) {
-    res.send(JSON.stringify(data))
-  })
-})
-
-var server = app.listen(port, function () {
-  var server_host = server.address().address
-  var server_port = server.address().port
-
-  console.log("Listening at http://%s:%s", server_host, server_port)
-})
+var port = process.env.PORT || 3000;
+module.exports = app.listen(port);
