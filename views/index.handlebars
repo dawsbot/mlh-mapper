@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Simple Map</title>
+  <title>mlh-mapper | See every MLH hackathon on a map!</title>
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
 
   <link rel="stylesheet" type="text/css" href="css/site.css">
-  {{!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>--}}
-  {{!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>--}}
-  <script src="js/mapper.js"></script>
-
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 </head>
 <body>
+  <h1>Welcome to mlh-mapper!</h1>
   <div id="map"></div>
+  <script src="js/mapper.js"></script>
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key={{googleApiKey}}&callback=initMap">
     </script>
